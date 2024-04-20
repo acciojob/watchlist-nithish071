@@ -86,12 +86,18 @@ public class MovieRepository {
     }
 
     public void deleteDirector(String director){
-        directorMovieMapping.remove(director);
+        List<String> movies = directorMovieMapping.get(director);
         directorMap.remove(director);
+        directorMovieMapping.remove(director);
+        for(String name: movies){
+            movieMap.remove(name);
+        }
     }
 
     public void deleteAllDirector(){
-        directorMap.clear();
-        directorMovieMapping.clear();
+        List<String> directors = new ArrayList<>(directorMap.keySet());
+        for(String name: directors){
+            this.deleteDirector(name);
+        }
     }
 }
