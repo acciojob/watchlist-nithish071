@@ -87,9 +87,11 @@ public class MovieRepository {
 
     public void deleteDirector(String director){
         directorMovieMapping.remove(director);
+        directorMap.remove(director);
     }
 
     public void deleteAllDirector(){
+        directorMap.clear();
         directorMovieMapping.clear();
     }
 }
