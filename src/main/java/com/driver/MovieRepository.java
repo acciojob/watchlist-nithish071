@@ -19,28 +19,66 @@ public class MovieRepository {
 
     public void saveMovie(Movie movie){
         // your code here
+        String moveiName = movie.getName();
+        if(movieMap.containsKey(moveiName)){
+            System.out.println(moveiName +"Already exists");
+        } else {
+            movieMap.put(moveiName,movie);
+        }
     }
 
     public void saveDirector(Director director){
-        // your code here
+        String DirectorName = director.getName();
+        if(directorMap.containsKey(DirectorName)){
+            System.out.println(DirectorName +"Already exists");
+        } else {
+            directorMap.put(DirectorName,director);
+        }
     }
 
     public void saveMovieDirectorPair(String movie, String director){
         if(movieMap.containsKey(movie) && directorMap.containsKey(director)){
             // your code here
+            if(!directorMovieMapping.containsKey(director)){
+                List<String> list = new ArrayList<>();
+                list.add(movie);
+                directorMovieMapping.put(director,list);
+            } else {
+                List<String> ls = directorMovieMapping.get(director);
+                ls.add(movie);
+                directorMovieMapping.put(director,ls);
+            }
         }
     }
 
     public Movie findMovie(String movie){
         // your code here
+        for(String mov: movieMap.keySet()){
+            if(mov.equals(movie)){
+                return movieMap.get(mov);
+            }
+        }
+        return null;
     }
 
     public Director findDirector(String director){
         // your code here
+        for(String name: directorMap.keySet()){
+            if(name.equals(director)){
+                return directorMap.get(name);
+            }
+        }
+        return null;
     }
 
     public List<String> findMoviesFromDirector(String director){
         // your code here
+        for(String name: directorMovieMapping.keySet()){
+            if(name.equals(director)){
+                return directorMovieMapping.get(name);
+            }
+        }
+        return null;
     }
 
     public List<String> findAllMovies(){
@@ -48,10 +86,10 @@ public class MovieRepository {
     }
 
     public void deleteDirector(String director){
-        // your code here
+        directorMap.remove(director);
     }
 
     public void deleteAllDirector(){
-        // your code here
+        directorMap.clear();
     }
 }
